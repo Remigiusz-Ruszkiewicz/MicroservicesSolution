@@ -14,7 +14,6 @@ namespace Api.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Relationship: Car -> Parts
             modelBuilder.Entity<Part>()
                 .HasOne(p => p.Car)
                 .WithMany(c => c.Parts)
