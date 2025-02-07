@@ -7,12 +7,12 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((hostContext, services) =>
     {
 
-        services.AddSingleton<IConverter, SynchronizedConverter>(sp =>
-            new SynchronizedConverter(new PdfTools()));
+        // services.AddSingleton<IConverter, SynchronizedConverter>(sp =>
+        //     new SynchronizedConverter(new PdfTools()));
 
         services.AddScoped<PdfService>();
 
-        services.AddHostedService<Worker>();
+        //services.AddHostedService<Worker>();
     })
     .Build();
 

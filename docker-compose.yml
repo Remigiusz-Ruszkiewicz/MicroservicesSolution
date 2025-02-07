@@ -2,14 +2,22 @@
 services:
   api:
     build:
-      context: ./api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Api/Dockerfile
     ports:
       - "5001:5000"
     environment:
-      - ConnectionStrings__DefaultConnection=Host=db;Database=autos;Username=postgres;Password=postgres
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ConnectionStrings__DefaultConnection=Host=db;Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD}
     depends_on:
       - db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"] 
+      interval: 30s
+      retries: 3
+      timeout: 10s
+      start_period: 10s
+    restart: on-failure
 
   db:
     image: postgres:15
@@ -21,24 +29,33 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 30s
+      retries: 3
+      timeout: 10s
+      start_period: 10s
+    restart: on-failure
 
   reports:
     build:
-      context: ./reports
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Reports/Dockerfile
     environment:
       - ConnectionStrings__DefaultConnection=Host=db;Database=autos;Username=postgres;Password=postgres
     depends_on:
       - db
+    restart: unless-stopped
 
   web:
     build:
-      context: ./web
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Web/Dockerfile
     ports:
       - "8080:80"
     depends_on:
       - reports
+    restart: unless-stopped
 
 volumes:
   db_data:

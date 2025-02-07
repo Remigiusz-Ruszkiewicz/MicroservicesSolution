@@ -1,0 +1,10 @@
+@model Web.Models.Car
+<h2>Create ModelName</h2>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Make"></label>
+        <input asp-for="Make" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+<a asp-action="Index">Back to List</a>

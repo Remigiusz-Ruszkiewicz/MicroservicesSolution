@@ -1,0 +1,10 @@
+@model Web.Models.Client
+<h2>Create ModelName</h2>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+<a asp-action="Index">Back to List</a>

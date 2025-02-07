@@ -1,0 +1,35 @@
+@model IEnumerable<Web.Models.Car>
+<h2>ModelName List</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Registration Number</th>
+        <th>Status</th>
+        <th>Owner Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Make</td>
+            <td>@item.Model</td>
+            <td>@item.Year</td>
+            <td>@item.RegistrationNumber</td>
+            <td>@item.Status</td>
+            <td>@item.OwnerName</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a asp-action="Create" class="btn btn-primary">Create New</a>
