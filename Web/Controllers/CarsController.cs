@@ -19,14 +19,14 @@ public class CarsController : Controller
         var cars = await _httpClient.GetFromJsonAsync<List<Car>>("api/cars");
         return View(cars);
     }
-
+    [HttpGet]
     public async Task<IActionResult> Details(int id)
     {
-        var car = await _httpClient.GetFromJsonAsync<Car>($"api/cars/{id}");
+        var car = await _httpClient.GetFromJsonAsync<List<Car>>($"api/cars?id={id}");
         if (car == null)
             return NotFound();
 
-        return View(car);
+        return View(car.First());
     }
 
     public IActionResult Create()
@@ -44,7 +44,7 @@ public class CarsController : Controller
         ModelState.AddModelError(string.Empty, "Failed to create the car");
         return View(car);
     }
-
+    [HttpPut]
     public async Task<IActionResult> Edit(int id)
     {
         var car = await _httpClient.GetFromJsonAsync<Car>($"api/cars/GetCarById/{id}");

@@ -24,12 +24,10 @@ public class CarsController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetCarById(int id)
+    public async Task<Car?> GetCarById(int id)
     {
         var car = await _carsService.GetCarById(id);
-        if (car == null)
-            return NotFound();
-        return Ok(car);
+        return car;
     }
 
     [HttpPost]
